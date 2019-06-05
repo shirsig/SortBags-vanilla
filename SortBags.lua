@@ -5,7 +5,7 @@ CreateFrame('GameTooltip', 'SortBagsTooltip', nil, 'GameTooltipTemplate')
 
 local CONTAINERS
 
-function _G.SortBags(containers)
+function _G.SortBags()
 	CONTAINERS = {0, 1, 2, 3, 4}
 	Start()
 end

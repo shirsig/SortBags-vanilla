@@ -3,6 +3,11 @@ setfenv(1, setmetatable(_M, {__index=_G}))
 
 CreateFrame('GameTooltip', 'SortBagsTooltip', nil, 'GameTooltipTemplate')
 
+local function IsPlayingOnTurtleWoW()
+	-- https://github.com/refaim/Turtle-WoW-UI-Source/blob/d6137c2ebd291f10ce284e586a5733dd5141bef2/Interface/FrameXML/TargetFrame.xml#L183
+	return TargetHPText ~= nil and TargetHPPercText ~= nil
+end
+
 local CONTAINERS
 
 function _G.SortBags()
@@ -117,6 +122,12 @@ local CLASSES = {
 	},
 }
 
+local defaultDelay = .2
+if IsPlayingOnTurtleWoW() then
+	-- https://turtle-wow.org/bug-report?id=2395
+	defaultDelay = 1.2
+end
+
 local model, itemStacks, itemClasses, itemSortKeys
 
 do
@@ -136,7 +147,7 @@ do
 	f:SetScript('OnUpdate', function()
 		delay = delay - arg1
 		if delay <= 0 then
-			delay = .2
+			delay = defaultDelay
 
 			local complete = Sort()
 			if complete or GetTime() > timeout then

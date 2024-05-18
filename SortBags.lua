@@ -6,6 +6,19 @@ CreateFrame('GameTooltip', 'SortBagsTooltip', nil, 'GameTooltipTemplate')
 local function IsPlayingOnTurtleWoW()
 	-- https://github.com/refaim/Turtle-WoW-UI-Source/blob/d6137c2ebd291f10ce284e586a5733dd5141bef2/Interface/FrameXML/TargetFrame.xml#L183
 	return TargetHPText ~= nil and TargetHPPercText ~= nil
+
+local function IsSuperWoWLoaded()
+	-- https://github.com/balakethelock/SuperWoW/wiki/Features
+	return SetAutoloot ~= nil
+end
+
+local function GetContainerItemCount(container, position)
+	local _, countOrCharges = GetContainerItemInfo(container, position)
+	local count = countOrCharges
+	if IsSuperWoWLoaded() and countOrCharges < 0 then
+		count = 1
+	end
+	return count
 end
 
 local CONTAINERS
@@ -333,7 +346,7 @@ do
 				local slot = {container=container, position=position, class=class}
 				local item = Item(container, position)
 				if item then
-					local _, count = GetContainerItemInfo(container, position)
+					local count = GetContainerItemCount(container, position)
 					slot.item = item
 					slot.count = count
 					counts[item] = (counts[item] or 0) + count

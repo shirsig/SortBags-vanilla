@@ -6,6 +6,7 @@ CreateFrame('GameTooltip', 'SortBagsTooltip', nil, 'GameTooltipTemplate')
 local function IsPlayingOnTurtleWoW()
 	-- https://github.com/refaim/Turtle-WoW-UI-Source/blob/d6137c2ebd291f10ce284e586a5733dd5141bef2/Interface/FrameXML/TargetFrame.xml#L183
 	return TargetHPText ~= nil and TargetHPPercText ~= nil
+end
 
 local function IsSuperWoWLoaded()
 	-- https://github.com/balakethelock/SuperWoW/wiki/Features
